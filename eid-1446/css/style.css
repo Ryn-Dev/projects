@@ -1,0 +1,62 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url('../img/masjid-1.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+  font-family: 'Inconsolata', monospace;
+}
+
+.container-fluid, .row {
+  height: 100%;
+}
+
+.board-container {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.board {
+  background-color: rgba(0, 0, 0, 0.9); /* Lebih transparan */
+  color: #ffffff;
+  height: auto;
+  min-height: 80vh; /* Minimal tinggi 80% viewport */
+  padding: 20px;
+  border-radius: 10px; /* Tambahkan sudut agar lebih modern */
+}
+
+#terminal {
+  white-space: pre;
+  font-size: 1.2rem; /* Pastikan font tetap terlihat jelas */
+}
+
+#b {
+  display: none;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll; /* Fixed bisa bermasalah di mobile */
+  }
+
+  .board-container {
+    padding: 10px;
+  }
+
+  .board {
+    padding: 15px;
+    min-height: 70vh;
+  }
+
+  #terminal {
+    font-size: 1rem; /* Kurangi ukuran font agar pas di layar kecil */
+  }
+}
