@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Portal Internal Politeknik IDN Bogor — Akses semua layanan digital kampus dalam satu halaman." />
+<link rel="shortcut icon" href="https://portofolio.politeknikidn.id/images/brand_idn.png" type="image/x-icon" />
+<title>Portal — Politeknik IDN Bogor</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #f7f8fa;
+    --surface:  #ffffff;
+    --border:   #e4e7ed;
+    --text-1:   #0d1117;
+    --text-2:   #5a6172;
+    --text-3:   #9aa0ae;
+    --navy:     #0f2a5e;
+    --navy-mid: #1e3f80;
+    --accent:   #2563eb;
+    --accent-2: #3b82f6;
+    --radius-card: 18px;
+    --radius-sm:    10px;
+    --shadow-card: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.07);
+    --shadow-hover: 0 4px 8px rgba(0,0,0,.06), 0 12px 40px rgba(15,42,94,.13);
+    --transition: .28s cubic-bezier(.4,0,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-1);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── subtle dot grid ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(15,42,94,.055) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* ─── page wrapper ─── */
+  .page {
+    position: relative; z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 56px 24px 64px;
+  }
+
+  /* ─── header ─── */
+  .header {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; margin-bottom: 40px;
+    animation: fadeUp .55s ease both;
+  }
+  .logo-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+  }
+  .logo-row img {
+    width: 42px; height: 42px; object-fit: contain;
+  }
+  .logo-row .brand {
+    text-align: left;
+  }
+  .logo-row .brand-name {
+    font-size: 15px; font-weight: 700; letter-spacing: .08em;
+    color: var(--navy); text-transform: uppercase; line-height: 1;
+  }
+  .logo-row .brand-sub {
+    font-size: 10px; font-weight: 500; letter-spacing: .12em;
+    color: var(--text-3); text-transform: uppercase; margin-top: 3px;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400; line-height: 1.12;
+    color: var(--navy); letter-spacing: -.02em; margin-bottom: 12px;
+  }
+  .header h1 em { font-style: italic; color: var(--accent); }
+  .header p {
+    font-size: 15px; color: var(--text-2); max-width: 460px; line-height: 1.65;
+  }
+
+  /* ─── search ─── */
+  .search-wrap {
+    width: 100%; max-width: 520px;
+    margin: 28px auto 0;
+    position: relative;
+    animation: fadeUp .55s .1s ease both;
+  }
+  .search-icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; color: var(--text-3); pointer-events: none;
+  }
+  .search-wrap input {
+    width: 100%; padding: 13px 48px 13px 46px;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--text-1);
+    box-shadow: 0 2px 12px rgba(15,42,94,.06);
+    outline: none; transition: var(--transition);
+  }
+  .search-wrap input::placeholder { color: var(--text-3); }
+  .search-wrap input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(37,99,235,.1);
+  }
+  .search-clear {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; padding: 4px;
+    color: var(--text-3); display: none; line-height: 1;
+    border-radius: 50%; transition: color .2s;
+  }
+  .search-clear:hover { color: var(--text-1); }
+  .search-clear.visible { display: flex; align-items: center; justify-content: center; }
+
+  .no-result {
+    display: none; text-align: center; padding: 48px 0;
+    font-size: 14px; color: var(--text-3);
+  }
+  .no-result.show { display: block; }
+
+  /* ─── section label ─── */
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--text-3);
+    margin-bottom: 20px; margin-top: 8px;
+    animation: fadeUp .55s .15s ease both;
+  }
+
+  /* ─── grid ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+    gap: 18px;
+    animation: fadeUp .55s .2s ease both;
+  }
+
+  /* ─── card ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    display: flex; flex-direction: column;
+    text-decoration: none; color: inherit;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+  }
+  .card:hover .card-bar { transform: scaleX(1); }
+  .card:hover .card-icon-wrap { background: var(--card-color, var(--accent)); }
+  .card:hover .card-icon-wrap svg { color: #fff; }
+  .card:hover .card-arrow { opacity: 1; transform: translate(0,0); }
+  .card:hover .card-title { color: var(--card-color, var(--accent)); }
+
+  /* top accent bar */
+  .card-bar {
+    height: 3px;
+    background: var(--card-color, var(--accent));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform var(--transition);
+  }
+
+  .card-body { padding: 22px 22px 20px; flex: 1; display: flex; flex-direction: column; }
+
+  .card-top {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; margin-bottom: 18px;
+  }
+  .card-icon-wrap {
+    width: 42px; height: 42px; border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--card-color, var(--accent)) 10%, #fff);
+    display: flex; align-items: center; justify-content: center;
+    transition: background var(--transition);
+    flex-shrink: 0;
+  }
+  .card-icon-wrap svg {
+    width: 20px; height: 20px;
+    color: var(--card-color, var(--accent));
+    transition: color var(--transition);
+  }
+  .card-arrow {
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    color: var(--text-3); opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: opacity var(--transition), transform var(--transition);
+  }
+  .card-arrow svg { width: 14px; height: 14px; }
+
+  /* illustration area */
+  .card-illo {
+    width: 100%; aspect-ratio: 16/7;
+    border-radius: 10px; overflow: hidden;
+    background: color-mix(in srgb, var(--card-color, var(--accent)) 6%, #f7f8fa);
+    margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-illo svg { width: 88%; height: 88%; }
+
+  .card-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 6px;
+    color: var(--text-1); transition: color var(--transition); line-height: 1.3;
+  }
+  .card-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; flex: 1; }
+
+  .card-footer {
+    padding: 12px 22px 16px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-tag {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 50px;
+    background: color-mix(in srgb, var(--card-color, var(--accent)) 10%, #fff);
+    color: var(--card-color, var(--accent));
+  }
+  .card-link-text {
+    font-size: 12px; font-weight: 600; color: var(--text-3);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .card-link-text svg { width: 12px; height: 12px; }
+
+  /* hidden card state for search */
+  .card[data-hidden="true"] { display: none; }
+
+  /* ─── footer ─── */
+  .footer {
+    margin-top: 56px; text-align: center;
+    font-size: 12px; color: var(--text-3);
+    animation: fadeUp .55s .35s ease both;
+    line-height: 1.8;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer .dev { margin-top: 4px; }
+
+  /* ─── keyframe ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── responsive ─── */
+  @media (max-width: 600px) {
+    .page { padding: 36px 16px 48px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="logo-row">
+      <img src="https://portofolio.politeknikidn.id/images/brand_idn.png" alt="Logo Politeknik IDN" />
+      <div class="brand">
+        <div class="brand-name">Politeknik IDN Bogor</div>
+        <div class="brand-sub">Portal Layanan Digital</div>
+      </div>
+    </div>
+    <h1>Semua Layanan<br/><em>dalam Satu Portal</em></h1>
+    <p>Akses platform digital Politeknik IDN Bogor — portofolio mahasiswa, ujian, pembelajaran, wisuda, dan sistem tugas akhir.</p>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Cari layanan, mis. "portofolio" atau "wisuda"…" autocomplete="off" />
+      <button class="search-clear" id="searchClear" aria-label="Hapus pencarian">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══ SECTION LABEL ══ -->
+  <p class="section-label" id="sectionLabel">5 Layanan tersedia</p>
+
+  <!-- ══ GRID ══ -->
+  <div class="grid" id="cardGrid">
+
+    <!-- ① PORTOFOLIO -->
+    <a class="card" href="https://portofolio.politeknikidn.id" target="_blank" rel="noopener"
+       data-name="portofolio karya mahasiswa" style="--card-color:#7c3aed">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon-wrap">
+            <!-- briefcase / portfolio icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+              <line x1="12" y1="12" x2="12" y2="12.01"/><path d="M2 12h20"/>
+            </svg>
+          </div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </div>
+        </div>
+        <!-- illustration -->
+        <div class="card-illo">
+          <svg viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- grid of project cards -->
+            <rect x="10" y="20" width="88" height="90" rx="8" fill="#ede9fe"/>
+            <rect x="18" y="28" width="72" height="42" rx="5" fill="#ddd6fe"/>
+            <rect x="18" y="78" width="40" height="6" rx="3" fill="#7c3aed" opacity=".35"/>
+            <rect x="18" y="90" width="55" height="4" rx="2" fill="#c4b5fd" opacity=".5"/>
+            <rect x="18" y="98" width="48" height="4" rx="2" fill="#c4b5fd" opacity=".3"/>
+
+            <rect x="110" y="10" width="88" height="90" rx="8" fill="#ede9fe"/>
+            <rect x="118" y="18" width="72" height="42" rx="5" fill="#ddd6fe"/>
+            <rect x="118" y="68" width="50" height="6" rx="3" fill="#7c3aed" opacity=".45"/>
+            <rect x="118" y="80" width="60" height="4" rx="2" fill="#c4b5fd" opacity=".5"/>
+            <rect x="118" y="88" width="42" height="4" rx="2" fill="#c4b5fd" opacity=".3"/>
+
+            <rect x="210" y="20" width="88" height="90" rx="8" fill="#ede9fe"/>
+            <rect x="218" y="28" width="72" height="42" rx="5" fill="#ddd6fe"/>
+            <rect x="218" y="78" width="44" height="6" rx="3" fill="#7c3aed" opacity=".35"/>
+            <rect x="218" y="90" width="58" height="4" rx="2" fill="#c4b5fd" opacity=".5"/>
+            <rect x="218" y="98" width="50" height="4" rx="2" fill="#c4b5fd" opacity=".3"/>
+
+            <!-- star accents -->
+            <circle cx="54" cy="49" r="12" fill="#7c3aed" opacity=".15"/>
+            <path d="M54 41l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" fill="#7c3aed" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-title">Portofolio Mahasiswa</div>
+        <div class="card-desc">Jelajahi karya terbaik mahasiswa — proyek akhir, desain, riset, dan inovasi teknologi yang dipublikasikan.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Portofolio</span>
+        <span class="card-link-text">portofolio.politeknikidn.id <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+      </div>
+    </a>
+
+    <!-- ② EXAM -->
+    <a class="card" href="https://exam.politeknikidn.id" target="_blank" rel="noopener"
+       data-name="exam ujian soal tes evaluasi" style="--card-color:#2563eb">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </div>
+        </div>
+        <div class="card-illo">
+          <svg viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- answer sheet -->
+            <rect x="60" y="10" width="200" height="110" rx="10" fill="#eff6ff"/>
+            <rect x="75" y="22" width="110" height="7" rx="3.5" fill="#bfdbfe"/>
+            <!-- multiple choice rows -->
+            <circle cx="82" cy="46" r="6" fill="#bfdbfe"/>
+            <rect x="94" y="43" width="70" height="5" rx="2.5" fill="#dbeafe"/>
+            <circle cx="82" cy="62" r="6" fill="#2563eb" opacity=".8"/>
+            <rect x="94" y="59" width="80" height="5" rx="2.5" fill="#dbeafe"/>
+            <circle cx="82" cy="78" r="6" fill="#bfdbfe"/>
+            <rect x="94" y="75" width="60" height="5" rx="2.5" fill="#dbeafe"/>
+            <circle cx="82" cy="94" r="6" fill="#bfdbfe"/>
+            <rect x="94" y="91" width="74" height="5" rx="2.5" fill="#dbeafe"/>
+            <!-- checkmark badge -->
+            <circle cx="230" cy="38" r="18" fill="#2563eb" opacity=".12"/>
+            <path d="M221 38l6 6 12-12" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-title">Exam — Ujian Online</div>
+        <div class="card-desc">Platform ujian digital dengan soal terstandarisasi, evaluasi otomatis, dan hasil instan.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Ujian</span>
+        <span class="card-link-text">exam.politeknikidn.id <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+      </div>
+    </a>
+
+    <!-- ③ LMS -->
+    <a class="card" href="https://lms.politeknikidn.id" target="_blank" rel="noopener"
+       data-name="lms pembelajaran belajar materi kelas kuliah" style="--card-color:#059669">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+          </div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </div>
+        </div>
+        <div class="card-illo">
+          <svg viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- open book -->
+            <rect x="30" y="30" width="120" height="80" rx="8" fill="#d1fae5"/>
+            <rect x="170" y="30" width="120" height="80" rx="8" fill="#d1fae5"/>
+            <rect x="38" y="40" width="60" height="5" rx="2.5" fill="#6ee7b7"/>
+            <rect x="38" y="50" width="95" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="38" y="59" width="80" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="38" y="68" width="88" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="38" y="77" width="70" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="38" y="86" width="82" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="178" y="40" width="60" height="5" rx="2.5" fill="#6ee7b7"/>
+            <rect x="178" y="50" width="95" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="178" y="59" width="75" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="178" y="68" width="90" height="4" rx="2" fill="#a7f3d0"/>
+            <rect x="178" y="77" width="65" height="4" rx="2" fill="#a7f3d0"/>
+            <!-- spine -->
+            <rect x="156" y="28" width="8" height="84" rx="4" fill="#059669" opacity=".3"/>
+            <!-- progress dots -->
+            <circle cx="72" cy="103" r="5" fill="#059669" opacity=".5"/>
+            <circle cx="86" cy="103" r="5" fill="#059669" opacity=".8"/>
+            <circle cx="100" cy="103" r="5" fill="#059669"/>
+          </svg>
+        </div>
+        <div class="card-title">LMS — Platform Belajar</div>
+        <div class="card-desc">Akses materi kuliah, tugas, forum diskusi, dan rekap kehadiran secara digital kapanpun.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Pembelajaran</span>
+        <span class="card-link-text">lms.politeknikidn.id <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+      </div>
+    </a>
+
+    <!-- ④ WISUDA -->
+    <a class="card" href="https://wisuda.politeknikidn.id" target="_blank" rel="noopener"
+       data-name="wisuda kelulusan toga sarjana graduation sertifikat ijazah" style="--card-color:#d97706">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </div>
+        </div>
+        <div class="card-illo">
+          <svg viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- certificate -->
+            <rect x="50" y="15" width="220" height="100" rx="10" fill="#fef3c7"/>
+            <rect x="65" y="28" width="140" height="7" rx="3.5" fill="#fcd34d" opacity=".8"/>
+            <rect x="90" y="42" width="90" height="5" rx="2.5" fill="#fbbf24" opacity=".5"/>
+            <!-- medal/seal -->
+            <circle cx="160" cy="80" r="24" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+            <circle cx="160" cy="80" r="17" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
+            <path d="M160 65l3.5 7.5 8.3 1.2-6 5.8 1.4 8.2L160 84l-7.2 3.7 1.4-8.2-6-5.8 8.3-1.2z" fill="#f59e0b" opacity=".7"/>
+            <!-- ribbons -->
+            <path d="M148 104l-8 16" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+            <path d="M172 104l8 16" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+            <!-- bottom lines -->
+            <rect x="70" y="28" width="0" height="0" rx="0"/>
+            <rect x="80" y="114" width="65" height="4" rx="2" fill="#fcd34d" opacity=".4"/>
+            <rect x="175" y="114" width="65" height="4" rx="2" fill="#fcd34d" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-title">Portal Wisuda</div>
+        <div class="card-desc">Informasi pendaftaran wisuda, verifikasi data kelulusan, unggah berkas, dan cetak surat keterangan lulus.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Wisuda</span>
+        <span class="card-link-text">wisuda.politeknikidn.id <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+      </div>
+    </a>
+
+    <!-- ⑤ SIMTA -->
+    <a class="card" href="https://simta.politeknikidn.id" target="_blank" rel="noopener"
+       data-name="simta tugas akhir skripsi bimbingan sidang yudisium" style="--card-color:#0f2a5e">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </div>
+        </div>
+        <div class="card-illo">
+          <svg viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- pipeline / steps -->
+            <rect x="20" y="50" width="52" height="36" rx="8" fill="#e8edf7"/>
+            <rect x="28" y="58" width="32" height="5" rx="2.5" fill="#b8c8e8"/>
+            <rect x="28" y="67" width="24" height="4" rx="2" fill="#c8d8f0" opacity=".7"/>
+            <rect x="28" y="75" width="28" height="4" rx="2" fill="#c8d8f0" opacity=".5"/>
+
+            <path d="M74 68h18" stroke="#0f2a5e" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+            <path d="M86 62l8 6-8 6" stroke="#0f2a5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/>
+
+            <rect x="94" y="50" width="52" height="36" rx="8" fill="#e8edf7"/>
+            <rect x="102" y="58" width="32" height="5" rx="2.5" fill="#b8c8e8"/>
+            <rect x="102" y="67" width="28" height="4" rx="2" fill="#c8d8f0" opacity=".7"/>
+            <rect x="102" y="75" width="20" height="4" rx="2" fill="#c8d8f0" opacity=".5"/>
+
+            <path d="M148 68h18" stroke="#0f2a5e" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+            <path d="M160 62l8 6-8 6" stroke="#0f2a5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/>
+
+            <rect x="168" y="50" width="52" height="36" rx="8" fill="#d4dcef"/>
+            <rect x="176" y="58" width="32" height="5" rx="2.5" fill="#7896c8"/>
+            <rect x="176" y="67" width="26" height="4" rx="2" fill="#99b0d8" opacity=".7"/>
+            <rect x="176" y="75" width="30" height="4" rx="2" fill="#99b0d8" opacity=".5"/>
+
+            <path d="M222 68h18" stroke="#0f2a5e" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+            <path d="M234 62l8 6-8 6" stroke="#0f2a5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/>
+
+            <rect x="242" y="42" width="58" height="52" rx="8" fill="#0f2a5e" opacity=".9"/>
+            <rect x="250" y="53" width="38" height="5" rx="2.5" fill="#fff" opacity=".4"/>
+            <rect x="250" y="63" width="28" height="4" rx="2" fill="#fff" opacity=".25"/>
+            <rect x="250" y="72" width="34" height="4" rx="2" fill="#fff" opacity=".2"/>
+            <!-- checkmark on last card -->
+            <circle cx="271" cy="83" r="8" fill="#fff" opacity=".2"/>
+            <path d="M267 83l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-title">SIMTA — Tugas Akhir</div>
+        <div class="card-desc">Sistem manajemen pengajuan judul, bimbingan, sidang, hingga yudisium Tugas Akhir mahasiswa secara terpadu.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Akademik</span>
+        <span class="card-link-text">simta.politeknikidn.id <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+      </div>
+    </a>
+
+  </div><!-- /grid -->
+
+  <p class="no-result" id="noResult">Tidak ada layanan yang cocok dengan pencarian Anda.</p>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <p>© 2025 Politeknik IDN Bogor — Portal Layanan Digital</p>
+    <p class="dev">Dikembangkan oleh <a href="https://febryann.my.id" target="_blank" rel="noopener">Febryan</a> dengan penuh semangat di Bogor 🌿</p>
+  </footer>
+
+</div><!-- /page -->
+
+<script>
+  const input    = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('searchClear');
+  const cards    = document.querySelectorAll('.card');
+  const label    = document.getElementById('sectionLabel');
+  const noResult = document.getElementById('noResult');
+  const total    = cards.length;
+
+  function runSearch(q) {
+    q = q.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const haystack = card.getAttribute('data-name') + ' ' + card.querySelector('.card-title').textContent.toLowerCase();
+      const match = !q || haystack.includes(q);
+      card.setAttribute('data-hidden', match ? 'false' : 'true');
+      if (match) visible++;
+    });
+    label.textContent = q
+      ? `${visible} layanan ditemukan untuk "${q}"`
+      : `${total} Layanan tersedia`;
+    noResult.classList.toggle('show', visible === 0);
+    clearBtn.classList.toggle('visible', q.length > 0);
+  }
+
+  input.addEventListener('input', () => runSearch(input.value));
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    runSearch('');
+    input.focus();
+  });
+</script>
+</body>
+</html>
