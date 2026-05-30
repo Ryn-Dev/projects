@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Febryan - Web & Android Developer Portfolio">
+<meta name="author" content="Febryan">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>Resume - Febryan</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --amber:#EF9F27;
+    --amber-light:#FAEEDA;
+    --amber-dark:#633806;
+    --dark:#0e0e0e;
+    --dark2:#181818;
+    --dark3:#242424;
+    --text:#f0ece3;
+    --muted:#888880;
+    --border:#2e2e2e;
+    --font-display:'Syne',sans-serif;
+    --font-body:'DM Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--dark);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.7;overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:rgba(14,14,14,0.9);backdrop-filter:blur(12px)}
+  .nav-logo{font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--amber);letter-spacing:0.05em}
+  .nav-links{display:flex;gap:1.5rem}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:0.05em;transition:color 0.2s}
+  .nav-links a:hover{color:var(--text)}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(239,159,39,0.06) 0%,transparent 70%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1000px;margin:0 auto;width:100%}
+  .hero-eyebrow{font-size:11px;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:1rem}
+  .hero-name{font-family:var(--font-display);font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:1;margin-bottom:0.5rem}
+  .hero-name span{color:var(--amber)}
+  .hero-role{font-family:var(--font-display);font-size:1.1rem;font-weight:400;color:var(--muted);margin-bottom:1.5rem;letter-spacing:0.02em}
+  .hero-desc{color:#a09c93;font-size:14px;line-height:1.8;max-width:440px;margin-bottom:2rem}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{background:var(--amber);color:#1a0f00;padding:0.7rem 1.5rem;border-radius:4px;font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:0.05em;text-decoration:none;transition:all 0.2s;display:inline-block}
+  .btn-primary:hover{background:#FAC775;transform:translateY(-1px)}
+  .btn-outline{border:1px solid var(--border);color:var(--text);padding:0.7rem 1.5rem;border-radius:4px;font-family:var(--font-display);font-weight:600;font-size:13px;letter-spacing:0.05em;text-decoration:none;transition:all 0.2s;display:inline-block}
+  .btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+  .hero-card{background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:2rem;position:relative;overflow:hidden}
+  .hero-card::after{content:'';position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle at top right,rgba(239,159,39,0.12),transparent 70%)}
+  .avatar-ring{width:80px;height:80px;border-radius:50%;border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--amber);background:rgba(239,159,39,0.08)}
+  .hero-card h3{font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:0.3rem}
+  .hero-card .subtitle{font-size:12px;color:var(--muted);margin-bottom:1.5rem}
+  .stat-row{display:flex;gap:1.5rem}
+  .stat{text-align:center}
+  .stat-num{font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--amber)}
+  .stat-label{font-size:11px;color:var(--muted);letter-spacing:0.05em}
+  .divider-line{width:1px;background:var(--border)}
+
+  /* SECTIONS */
+  section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+  .section-label{font-size:11px;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:0.8rem}
+  .section-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:2rem;line-height:1.1}
+  .section-title span{color:var(--amber)}
+  hr.divider{border:none;border-top:1px solid var(--border);margin:0 auto;max-width:1000px;padding:0 2rem}
+
+  /* EXPERIENCE TIMELINE */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border)}
+  .timeline-item{position:relative;margin-bottom:2.5rem}
+  .timeline-dot{position:absolute;left:-2rem;top:0.3rem;width:12px;height:12px;border-radius:50%;background:var(--dark);border:2px solid var(--border);transform:translateX(-50%);transition:border-color 0.2s}
+  .timeline-item:hover .timeline-dot{border-color:var(--amber)}
+  .timeline-period{font-size:11px;color:var(--muted);letter-spacing:0.05em;margin-bottom:0.3rem}
+  .timeline-role{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:0.2rem}
+  .timeline-company{font-size:13px;color:var(--amber);margin-bottom:0.6rem}
+  .timeline-desc{font-size:13px;color:#a09c93;line-height:1.7}
+
+  /* SKILLS GRID */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:1rem}
+  .skill-card{background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:1rem 0.5rem;text-align:center;transition:all 0.2s;cursor:default}
+  .skill-card:hover{border-color:var(--amber);background:rgba(239,159,39,0.04)}
+  .skill-card i{font-size:1.5rem;color:var(--amber);margin-bottom:0.4rem;display:block}
+  .skill-card span{font-size:11px;color:var(--muted)}
+
+  /* CERTS */
+  .certs-list{display:flex;flex-direction:column;gap:0.7rem}
+  .cert-item{display:flex;align-items:flex-start;gap:0.8rem;padding:0.9rem 1.1rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:all 0.2s}
+  .cert-item:hover{border-color:var(--amber);background:rgba(239,159,39,0.04)}
+  .cert-item i{color:var(--amber);margin-top:2px;flex-shrink:0;font-size:14px}
+  .cert-item span{font-size:13px;color:#c0bbb2}
+
+  /* LINKS GRID */
+  .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.7rem}
+  .link-card{display:flex;align-items:center;gap:0.7rem;padding:0.8rem 1rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:all 0.2s;font-size:13px}
+  .link-card:hover{border-color:var(--amber);color:var(--amber);background:rgba(239,159,39,0.04)}
+  .link-card i{color:var(--muted);font-size:14px;transition:color 0.2s}
+  .link-card:hover i{color:var(--amber)}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.8rem}
+  .contact-card{display:flex;align-items:center;gap:0.8rem;padding:1rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:all 0.2s}
+  .contact-card:hover{border-color:var(--amber);background:rgba(239,159,39,0.06);transform:translateY(-2px)}
+  .contact-icon{width:36px;height:36px;border-radius:8px;background:rgba(239,159,39,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .contact-icon i{color:var(--amber);font-size:15px}
+  .contact-label{font-size:11px;color:var(--muted);display:block;letter-spacing:0.03em}
+  .contact-value{font-size:13px;font-weight:500}
+
+  /* EDUCATION */
+  .edu-grid{display:grid;gap:1.2rem}
+  .edu-card{background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:border-color 0.2s}
+  .edu-card:hover{border-color:var(--amber)}
+  .edu-period{font-size:11px;color:var(--muted);letter-spacing:0.05em;margin-bottom:0.4rem}
+  .edu-name{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:0.2rem}
+  .edu-school{font-size:13px;color:var(--amber);margin-bottom:0.6rem}
+  .edu-desc{font-size:13px;color:#a09c93;line-height:1.7}
+
+  /* ARTICLES */
+  .articles-list{display:flex;flex-direction:column;gap:0.7rem}
+  .article-item{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.1rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:all 0.2s}
+  .article-item:hover{border-color:var(--amber);background:rgba(239,159,39,0.04)}
+  .article-item i{color:var(--amber);font-size:14px;flex-shrink:0}
+  .article-item span{font-size:13px;color:#c0bbb2}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:12px}
+  footer span{color:var(--amber);font-family:var(--font-display);font-weight:700}
+
+  /* ANIMATIONS */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.6s ease both}
+  .delay-1{animation-delay:0.1s}
+  .delay-2{animation-delay:0.2s}
+  .delay-3{animation-delay:0.3s}
+  .delay-4{animation-delay:0.4s}
+
+  @media(max-width:700px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-card{display:none}
+    nav{padding:1rem}
+    .nav-links{gap:1rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">febryan.</div>
+  <div class="nav-links">
+    <a href="#experience">Pengalaman</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Edukasi</a>
+    <a href="#contact">Kontak</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div class="fade-up">
+      <p class="hero-eyebrow">Web & Android Developer</p>
+      <h1 class="hero-name">Feb<span>ryan</span></h1>
+      <p class="hero-role">Fullstack · Mobile · Mentor</p>
+      <p class="hero-desc">Developer berdedikasi dengan pengalaman 3+ tahun di Laravel, Kotlin, Java, React, Next.js, dan Flutter. Passionate dalam membangun aplikasi berkualitas tinggi yang berpusat pada pengguna.</p>
+      <div class="hero-cta">
+        <a href="https://drive.google.com/drive/folders/1i8Fi93TFt9wBOTPZs9nrQyvWbbBpgr_f" class="btn-primary" target="_blank">Unduh CV</a>
+        <a href="#contact" class="btn-outline">Hubungi Saya</a>
+      </div>
+    </div>
+    <div class="fade-up delay-2">
+      <div class="hero-card">
+        <div class="avatar-ring">F</div>
+        <h3>Febryan</h3>
+        <p class="subtitle">Based in Indonesia · Open to work</p>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Tahun</div>
+          </div>
+          <div class="divider-line"></div>
+          <div class="stat">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Proyek</div>
+          </div>
+          <div class="divider-line"></div>
+          <div class="stat">
+            <div class="stat-num">10+</div>
+            <div class="stat-label">Sertifikat</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Kontak</p>
+  <h2 class="section-title"># <span>Hubungi</span> Saya</h2>
+  <div class="contact-grid">
+    <a href="mailto:febryan.work@gmail.com" target="_blank" class="contact-card">
+      <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+      <div><span class="contact-label">Email</span><span class="contact-value">febryan.work@gmail.com</span></div>
+    </a>
+    <a href="https://www.instagram.com/febryan1453" target="_blank" class="contact-card">
+      <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+      <div><span class="contact-label">Instagram</span><span class="contact-value">@febryan1453</span></div>
+    </a>
+    <a href="https://www.linkedin.com/in/febryan1453" target="_blank" class="contact-card">
+      <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+      <div><span class="contact-label">LinkedIn</span><span class="contact-value">febryan1453</span></div>
+    </a>
+    <a href="https://github.com/febryan1453" target="_blank" class="contact-card">
+      <div class="contact-icon"><i class="fab fa-github"></i></div>
+      <div><span class="contact-label">GitHub</span><span class="contact-value">febryan1453</span></div>
+    </a>
+    <a href="https://wa.me/6282191170349?text=Halo,%20saya%20tertarik%20untuk%20bekerjasama%20dengan%20Anda" target="_blank" class="contact-card">
+      <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+      <div><span class="contact-label">WhatsApp</span><span class="contact-value">+62 821-9117-0349</span></div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Pengalaman Kerja</p>
+  <h2 class="section-title"># <span>Work</span> Experiences</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">Agu 2021 – Sekarang</p>
+      <p class="timeline-role">Laravel & Flutter Mentor</p>
+      <p class="timeline-company">Politeknik IDN · Bogor, Indonesia</p>
+      <p class="timeline-desc">Membimbing mahasiswa melalui proyek praktis Laravel dan Flutter, memastikan mereka memperoleh keterampilan langsung dan pemahaman mendalam tentang framework ini.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">Okt 2023 – Feb 2024</p>
+      <p class="timeline-role">Fullstack Developer</p>
+      <p class="timeline-company">Billboard Company · Makassar, Indonesia</p>
+      <p class="timeline-desc">Mengembangkan sistem informasi perizinan, memperbarui kode PHP native ke framework modern untuk meningkatkan performa dan skalabilitas aplikasi.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">Jun – Sep 2023</p>
+      <p class="timeline-role">Fullstack Developer</p>
+      <p class="timeline-company">Instansi Militer · Makassar, Indonesia</p>
+      <p class="timeline-desc">Membangun sistem informasi pengajuan cuti kerja karyawan, berkolaborasi dengan stakeholder dan memigrasi kode PHP native ke framework modern.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">Des 2022 – Mar 2023</p>
+      <p class="timeline-role">Fullstack Developer</p>
+      <p class="timeline-company">Honda Bus Transport · Luwu, Indonesia</p>
+      <p class="timeline-desc">Mengembangkan sistem informasi dan platform pemesanan tiket bus online yang menghubungkan admin perusahaan transportasi dengan calon penumpang.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">Mei – Jun 2022</p>
+      <p class="timeline-role">Frontend Developer</p>
+      <p class="timeline-company">Wiz Company · Makassar, Indonesia</p>
+      <p class="timeline-desc">Membuat website company profile, berkolaborasi dengan desainer di Figma, slicing desain ke HTML/CSS dengan Bootstrap, dan mengelola proses deployment.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">Teknologi</p>
+  <h2 class="section-title"># <span>Tech</span> Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><i class="fab fa-laravel"></i><span>Laravel</span></div>
+    <div class="skill-card"><i class="fab fa-react"></i><span>React</span></div>
+    <div class="skill-card"><i class="fas fa-layer-group"></i><span>Next.js</span></div>
+    <div class="skill-card"><i class="fab fa-android"></i><span>Android</span></div>
+    <div class="skill-card"><i class="fab fa-java"></i><span>Java</span></div>
+    <div class="skill-card"><i class="fas fa-mobile-alt"></i><span>Flutter</span></div>
+    <div class="skill-card"><i class="fas fa-database"></i><span>MySQL</span></div>
+    <div class="skill-card"><i class="fab fa-github"></i><span>GitHub</span></div>
+    <div class="skill-card"><i class="fab fa-bootstrap"></i><span>Bootstrap</span></div>
+    <div class="skill-card"><i class="fas fa-wind"></i><span>Tailwind</span></div>
+    <div class="skill-card"><i class="fab fa-figma"></i><span>Figma</span></div>
+    <div class="skill-card"><i class="fas fa-fire"></i><span>Firebase</span></div>
+    <div class="skill-card"><i class="fas fa-rocket"></i><span>Vercel</span></div>
+    <div class="skill-card"><i class="fas fa-paper-plane"></i><span>Postman</span></div>
+    <div class="skill-card"><i class="fas fa-book-open"></i><span>Notion</span></div>
+    <div class="skill-card"><i class="fab fa-php"></i><span>PHP</span></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label">Pendidikan</p>
+  <h2 class="section-title"># <span>Education</span></h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <p class="edu-period">Jul 2018 – Apr 2023</p>
+      <p class="edu-name">S1 Teknik Informatika</p>
+      <p class="edu-school">Universitas Muslim Indonesia · Indonesia</p>
+      <p class="edu-desc">Membangun fondasi kuat dalam pengembangan perangkat lunak, sistem komputer, dan teknologi informasi. Aktif dalam proyek kolaboratif dan pengembangan solusi inovatif.</p>
+    </div>
+    <div class="edu-card">
+      <p class="edu-period">Jan – Jul 2021</p>
+      <p class="edu-name">IDN Academy</p>
+      <p class="edu-school">ID-Networkers · Slipi Jakarta, Indonesia</p>
+      <p class="edu-desc">Pelatihan intensif pengembangan Android (Java & Kotlin) dan Laravel. Progres dari level dasar hingga mahir dalam pemrograman Android, membangun aplikasi robust dan memahami mobile/web framework.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <p class="section-label">Sertifikasi</p>
+  <h2 class="section-title"># <span>Certificates</span></h2>
+  <div class="certs-list">
+    <a href="https://buildwithangga.com/talent/brayenfebryan/laravel-11-breeze-spatie-bikin-web-platform-online-course" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Laravel 11 class completion certificate · BuildWithAngga</span>
+    </a>
+    <a href="https://buildwithangga.com/talent/brayenfebryan/full-stack-laravel-11-next-js-14-web-rent-house" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Next.js 14 class completion certificate · BuildWithAngga</span>
+    </a>
+    <a href="https://santrikoding.com/cek-sertifikat?no=SK-5GEF5C72UF1N9CN" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Laravel & ReactJs class completion certificate · SantriKoding</span>
+    </a>
+    <a href="https://santrikoding.com/cek-sertifikat?no=SK-D2A116W97Y78P3X" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Laravel & AlpineJs class completion certificate · SantriKoding</span>
+    </a>
+    <a href="https://www.credential.net/7fa3d09f-885a-4a13-bb77-c0f3fae667ba#gs.h9s7e2#acc.uk5C4gEA" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Google Play Store Listing Certificate · Google</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1yCf2ojZzLFmGzoZ2SFN4op2vdDaWQjan/view?usp=sharing" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Android Java class completion certificate · IDN Academy</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1sdraagizR5WZlL6n_MPn8y0wEPxya3NQ/view?usp=sharing" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Android Kotlin class completion certificate · IDN Academy</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1oIlWAJwH7CpbQEbG2ela_cmKc_xo6FwN/view?usp=sharing" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Android Flutter class completion certificate · IDN Academy</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1CDFz2XxEdNp03WoRHzX2aV0xqiFQn7LF/view?usp=sharing" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Android Flutter Intermediate class completion certificate · IDN Academy</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1C_tvhkugPQDzoE8C-SCe5ROUrEGwdWXe/view?usp=sharing" target="_blank" class="cert-item">
+      <i class="fas fa-certificate"></i>
+      <span>Web Programming Laravel class completion certificate · IDN Academy</span>
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- MY LINKS -->
+<section id="links">
+  <p class="section-label">Koleksi Link</p>
+  <h2 class="section-title"># <span>My</span> Links</h2>
+  <div class="links-grid">
+    <a href="https://drive.google.com/drive/folders/1i8Fi93TFt9wBOTPZs9nrQyvWbbBpgr_f?usp=sharing" target="_blank" class="link-card"><i class="fas fa-file-pdf"></i> Curriculum Vitae</a>
+    <a href="https://febryann.notion.site/Example-of-discussion-and-offer-format-5d313d7421e945ed95fbb08c8727a344?pvs=4" target="_blank" class="link-card"><i class="fas fa-handshake"></i> Brief Project Offer</a>
+    <a href="https://ryn-dev.github.io/Meoww-Sleep/quran" target="_blank" class="link-card"><i class="fas fa-book"></i> Quran Audio Player</a>
+    <a href="https://ryn-dev.github.io/Meoww-Sleep/ucapan" target="_blank" class="link-card"><i class="fas fa-sun"></i> Daily Motivations</a>
+    <a href="https://ryn-dev.github.io/Meoww-Sleep/healing.html" target="_blank" class="link-card"><i class="fas fa-spa"></i> F-Relaxation Room 1</a>
+    <a href="https://ryn-dev.github.io/Meoww-Sleep/santai.html" target="_blank" class="link-card"><i class="fas fa-leaf"></i> F-Relaxation Room 2</a>
+    <a href="https://f-note.vercel.app" target="_blank" class="link-card"><i class="fas fa-sticky-note"></i> My Note App</a>
+    <a href="https://ryn-dev.github.io/Meoww-Sleep" target="_blank" class="link-card"><i class="fas fa-hourglass-half"></i> Countdown Timer 1</a>
+    <a href="https://countdown.febryann.my.id" target="_blank" class="link-card"><i class="fas fa-clock"></i> Countdown Timer 2</a>
+    <a href="https://countdown.febryann.my.id/setting" target="_blank" class="link-card"><i class="fas fa-cog"></i> Settings Countdown</a>
+    <a href="https://ryn-dev.github.io/Meoww-Sleep/cal.html" target="_blank" class="link-card"><i class="fas fa-calculator"></i> Calculator</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ARTICLES -->
+<section id="articles">
+  <p class="section-label">Tulisan</p>
+  <h2 class="section-title"># <span>Articles</span> & Talks</h2>
+  <div class="articles-list">
+    <a href="https://medium.com/@febryan1453/pengenalan-layouting-ui-pada-android-studio-versi-4-1-1-a4e18dcf4017" target="_blank" class="article-item">
+      <i class="fab fa-medium"></i>
+      <span>Pengenalan Layout / UI pada Android Studio Versi 4.1.1</span>
+    </a>
+    <a href="https://medium.com/@febryan1453/cara-membuat-toast-alert-dialog-snackbar-pada-android-studio-terbaru-dbfef1e33b0" target="_blank" class="article-item">
+      <i class="fab fa-medium"></i>
+      <span>Cara Membuat Toast, Alert Dialog & Snackbar di Android Studio Terbaru</span>
+    </a>
+    <a href="https://febryan1453.medium.com/intent-activity-memungkinkan-interaksi-antar-halaman-7cad0806e4ca" target="_blank" class="article-item">
+      <i class="fab fa-medium"></i>
+      <span>Activity Intent, Memungkinkan Interaksi Antar Halaman</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© <span id="current-year"></span> <span>Febryan</span> · All rights reserved.</p>
+  <p style="margin-top:0.4rem;font-size:11px">febryann.my.id</p>
+</footer>
+
+<script>
+  // Current year
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+
+  // Scroll animations
+  const items = document.querySelectorAll('.timeline-item, .edu-card, .skill-card, .cert-item, .link-card, .contact-card, .article-item');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  items.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
